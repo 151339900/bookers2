@@ -1,0 +1,115 @@
+<div>
+  <%= flash[:notice] %>
+</div>
+<div class= "container">
+  <div class = "row">
+    <div class = "col-md-3">
+      <div class ="container px-5 px-sm-0">
+      <div class ="row">
+      <div class ="col-ml-3">
+    <h1>User info</h1>
+    <% if @user.profile_image.attached? %>
+      <%= image_tag @user.profile_image, size: "100x100" %>
+    <% else %>
+      <%= image_tag 'no_image', size: "100x100" %>
+    <% end %>
+    <table class ="table">
+      <tbody>
+        <tr></tr>
+        <tr>
+          <th>name</th>
+          <th><%=@user.name %></th>
+        </tr>
+        <tr>
+          <th>introduction</th>
+          <th><%=@user.introduction %></th>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row">
+      <%= link_to edit_user_path(@user.id), class: "btn btn-outline-secondary btn-block" do %>
+        <i class="fas fa-user-cog"></i>
+      <% end %>
+    </div>
+    </div>
+    <div class="col-md-8 offset-md-1"></div>
+  </div>
+</div>
+
+
+
+
+
+
+
+      <%= form_with model: @book do |f| %>
+
+        <h1>New book</h1>
+        <% if @book.errors.any? %>
+          <%= @book.errors.count %>件のエラーが発生しました
+          <ul>
+            <% @book.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        <% end %>
+
+        <h4>title</h4>
+        <%= f.text_field :title %>
+
+        <h4>opinion</h4>
+        <%= f.text_area :body %>
+        <!-- 追加部分 -->
+
+        <%= f.submit 'Create Book' %>
+    </div>
+
+
+
+
+    <div class = "col-md-8">
+      <h1>Book detail</h1>
+<table class = "table table-hover table-inverse">
+   <thead>
+     <tr>
+       <th>Title</th>
+       <th>Opinion</th>
+       <th></th>
+     </tr>
+   </thead>
+   <tbody>
+
+  <tr>
+    <td>
+     <%= link_to user_path(@user) do %>
+      <% if @user.profile_image.attached? %>
+       <%= image_tag @user.profile_image, size: "100x100" %>
+     <% else %>
+       <%= image_tag 'no_image', size: "100x100" %>
+    <% end %>
+    <p><%= @user.name %> </p>
+    <% end %>
+    </td>
+     <td><%= @book_dil.title %></td>
+     
+     <td>
+      <%= @book_dil.body %>
+     </td>  
+     
+    <td>
+      <%if @user == current_user %>
+        <%= link_to "Edit", edit_book_path(@book_dil.id) %>
+      <% end %>
+    </td>
+    <td>
+      <%if @user == current_user %>
+        <%= link_to "Destroy", book_path(@book_dil.id), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+      <% end %>
+    </td>
+   </tr>
+   </tbody>
+  </table>
+    </div>
+  </div>
+</div>
+<% end %>
